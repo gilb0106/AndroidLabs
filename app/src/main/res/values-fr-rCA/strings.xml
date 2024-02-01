@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Lab2a</string>
+    <string name="top_message">J\'aime Android</string>
+    <string name="button">APPUYEZ-MOI</string>
+    <string name="checkbox">Regarde ça!</string>
+    <string name="switchbox">Allumer / éteindre</string>
+    <string name="android_hint">J\'aime Android</string>
+    <string name="stateOn">Sur</string>
+    <string name="stateOff">Désactivé</string>v
+    <string name="snackbarMessage">La case à cocher est maintenant :</string>s
+    <string name="toast_message">L\'étiquette a été mise à jour !</string>
+</resources>
