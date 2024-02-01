@@ -20,7 +20,7 @@ public class MainActivityConstraint extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_contraint); // Replace with your actual layout file
+        setContentView(R.layout.activity_main_contraint);
 
         final Button btn = findViewById(R.id.button);
         btn.setText(getString(R.string.button));

@@ -18,7 +18,7 @@ public class MainActivityLinear extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_linear); // Replace with your actual layout file
+        setContentView(R.layout.activity_main_linear);
 
         final Button btn = findViewById(R.id.button);
         btn.setText(getString(R.string.button));
