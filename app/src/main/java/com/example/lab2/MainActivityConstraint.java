@@ -29,10 +29,10 @@ public class MainActivityConstraint extends AppCompatActivity {
         final TextView textView = findViewById(R.id.textView);
 
         btn.setOnClickListener((click) -> {
-            // Get the current text from the EditText
+
             String currentText = editText.getText().toString();
 
-            // Set the current text into the TextView
+
             textView.setText(currentText);
 
 
@@ -45,10 +45,9 @@ public class MainActivityConstraint extends AppCompatActivity {
             String snackbarMessage = getString(R.string.snackbarMessage) + state;
 
             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), snackbarMessage, Snackbar.LENGTH_LONG);
-            snackbar.setAction("Undo", new View.OnClickListener() {
+            snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Undo action: Set the checkbox back to its original state
                     cb.setChecked(!isChecked);
                 }
             });

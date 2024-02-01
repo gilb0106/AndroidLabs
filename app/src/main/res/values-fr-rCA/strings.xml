@@ -9,4 +9,5 @@
     <string name="stateOff">Désactivé</string>v
     <string name="snackbarMessage">La case à cocher est maintenant :</string>s
     <string name="toast_message">L\'étiquette a été mise à jour !</string>
+   <string name="undo">annuler</string>
 </resources>

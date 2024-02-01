@@ -8,5 +8,6 @@
     <string name="toast_message">Label has been updated!</string>snackbarMessage
     <string name="snackbarMessage">The checkbox is now :</string>s
     <string name="stateOn">On</string>
-    <string name="stateOff">Off</string>v
+    <string name="stateOff">Off</string>
+    <string name="undo">Undo</string>
 </resources>

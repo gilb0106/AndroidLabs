@@ -43,7 +43,7 @@ public class MainActivityLinear extends AppCompatActivity {
             String snackbarMessage = getString(R.string.snackbarMessage) + state;
 
             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), snackbarMessage, Snackbar.LENGTH_LONG);
-            snackbar.setAction("Undo", new View.OnClickListener() {
+            snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // Undo action: Set the checkbox back to its original state
