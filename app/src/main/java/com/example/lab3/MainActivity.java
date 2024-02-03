@@ -1,11 +1,11 @@
 package com.example.lab3;
 
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 
-import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,9 +14,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent nextPage = new Intent(this, NameActivity.class);
-        Button secondButton = findViewById(R.id.button);
-        secondButton.setOnClickListener( click -> startActivity( nextPage ));
+        EditText editText = findViewById(R.id.editText);
+        Button nextButton = findViewById(R.id.button);
+
+        Intent nextPage = new Intent(MainActivity.this, NameActivity.class);
+        nextButton.setOnClickListener(click -> {
+            nextPage.putExtra("name", editText.getText().toString());
+
+        startActivity( nextPage );  });
+
+
+
 
     }
 }
