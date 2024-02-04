@@ -13,34 +13,38 @@ import android.widget.EditText;
 import com.example.lab3.NameActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int BUTTON_RESULT = 1;
-    SharedPreferences prefs = null;
-
+    private  int BUTTON_RESULT = 1;
+    SharedPreferences prefs = null; // instantiate sp obj to null
+    EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);
-        String savedString = prefs.getString("ReserveName", "");
-        EditText editText = findViewById(R.id.editText);
-        editText.setText(savedString);
+        prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);  // create sp file, FileName
+        String savedString = prefs.getString("ReserveName", ""); // if ReserveName in file has entry disp,if not leave blank
+        editText = findViewById(R.id.editText);
+        editText.setText(savedString);  // setText for edit text to savedString value, entry from FileName
         Button nextButton = findViewById(R.id.button);
-
 
         Intent nextPage = new Intent(MainActivity.this, NameActivity.class);
         nextButton.setOnClickListener(click -> {
             saveSharedPrefs(editText.getText().toString());
-            nextPage.putExtra("name", editText.getText().toString());
+            nextPage.putExtra("name", editText.getText().toString());  //listener with Intent obj to forward inputed namee to nameactivity
 
             startActivityForResult(nextPage, BUTTON_RESULT);  /*
             For result to expect return to either close or stay on this page */
 
         });
     }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onPause() {
+        super.onPause();
+        Log.d("Main Activity", "In onPause()");
+        saveSharedPrefs(editText.getText().toString());
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { // method to handle btn choice on nameactivity
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == BUTTON_RESULT) {
             if (resultCode == 0) {// if 0 do nothing, just stay on page
@@ -50,17 +54,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("Main Activity", "In onPause()");
-
-    }
-
     private void saveSharedPrefs(String stringToSave) {
         SharedPreferences prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
+        SharedPreferences.Editor editor = prefs.edit(); // call editor to save input name
         editor.putString("ReserveName", stringToSave);
-        editor.commit();
+        editor.commit(); // saving inputed name to sp FileName
     }
 }
