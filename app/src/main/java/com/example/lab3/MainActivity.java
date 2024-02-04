@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         nextButton.setOnClickListener(click -> {
             saveSharedPrefs(editText.getText().toString());
             nextPage.putExtra("name", editText.getText().toString());
-            editText.setText(savedString);
 
             startActivityForResult(nextPage, BUTTON_RESULT);  /*
             For result to expect return to either close or stay on this page */
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == BUTTON_RESULT) {
             if (resultCode == 0) {// if 0 do nothing, just stay on page
+
             } else if (resultCode == 1)  // shut er down
                 finish();
         }
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveSharedPrefs(String stringToSave) {
+        SharedPreferences prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("ReserveName", stringToSave);
         editor.commit();
