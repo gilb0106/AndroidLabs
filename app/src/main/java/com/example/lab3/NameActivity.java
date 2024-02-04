@@ -17,7 +17,7 @@ public class NameActivity extends AppCompatActivity {
         Intent dataSent = getIntent();
         String inputText = dataSent.getStringExtra("name");
         TextView textView = findViewById(R.id.textView);
-        textView.setText(inputText);
+        textView.setText(getString(R.string.welcome) + " " + inputText);
         Button DCMT = findViewById(R.id.DCMT);
         Button TY = findViewById(R.id.TY);
 
