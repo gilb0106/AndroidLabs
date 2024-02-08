@@ -29,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent nextPage = new Intent(MainActivity.this, NameActivity.class);
         nextButton.setOnClickListener(click -> {
-            saveSharedPrefs(editText.getText().toString());
-            nextPage.putExtra("name", editText.getText().toString());  //listener with Intent obj to forward inputed namee to nameactivity
+            nextPage.putExtra("name", editText.getText().toString());  //listener with Intent obj to forward inputted name to nameactivity
 
             startActivityForResult(nextPage, BUTTON_RESULT);  /*
             For result to expect return to either close or stay on this page */
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == BUTTON_RESULT) {
             if (resultCode == 0) {// if 0 do nothing, just stay on page
-
             } else if (resultCode == 1)  // shut er down
                 finish();
         }
