@@ -9,7 +9,7 @@
         android:id="@+id/textGoesHere"
         android:textSize="20dp"
         android:textColor="@color/black"
-        android:text="hello alert"/>
+        android:text="@string/hello_alert"/>
 
 
 </LinearLayout>

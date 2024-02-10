@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Type Here"
+            android:hint="@string/type_here"
             android:textColor="@color/black"
             android:gravity="fill" />
 
@@ -27,14 +27,14 @@
             android:id="@+id/switchBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Urgent"
+            android:text="@string/urgent"
             android:textColor="@color/black" />
 
         <Button
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add" />
+            android:text="@string/add" />
 
 
 

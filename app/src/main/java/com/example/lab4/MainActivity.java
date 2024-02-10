@@ -49,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
         myList.setOnItemClickListener((parent, view, pos, id) -> {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Do you want to delete this?")
-                    .setMessage("Selected row is: " + (pos))
-                    .setPositiveButton("Yes", (click, arg) -> {
+            alertDialogBuilder.setTitle(getString(R.string.delete_prompt))
+                    .setMessage(getString(R.string.selected_row) + " " + (pos))
+                    .setPositiveButton(getString(R.string.yes), (click, arg) -> {
                         elements.remove(pos);
                         myAdapter.notifyDataSetChanged();
                     })
                     //What the No button does:
-                    .setNegativeButton("No", (click, arg) -> { })
+                    .setNegativeButton(getString(R.string.no), (click, arg) -> { })
 
                     //Show the dialog
                     .create().show();
