@@ -18,14 +18,8 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
-
 import java.util.ArrayList;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -69,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 todoItems.add(item);
                 myAdapter.notifyDataSetChanged();
                 editText.getText().clear();
-                Toast.makeText(this, "Inserted item id:" + id, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.added) + id, Toast.LENGTH_LONG).show();
             }
         });
 
