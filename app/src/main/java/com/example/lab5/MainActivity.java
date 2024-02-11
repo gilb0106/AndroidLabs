@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.theListView);
 
 
-        DBStorage dbOpener = new DBStorage(this);
+        DBConnect dbOpener = new DBConnect(this);
         db = dbOpener.getWritableDatabase();
-        Cursor cursor = db.query(DBStorage.TABLE_TODO, null, null, null, null, null, null);
+        Cursor cursor = db.query(DBConnect.TABLE_TODO, null, null, null, null, null, null);
         printCursor(cursor);
         cursor.close();
 
@@ -77,13 +77,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFromDatabase() {
-        String[] columns = {DBStorage.COLUMN_ID, DBStorage.COLUMN_TEXT, DBStorage.COLUMN_URGENT};
-        Cursor cursor = db.query(false, DBStorage.TABLE_TODO, columns, null, null, null, null, null, null);
+        String[] columns = {DBConnect.COLUMN_ID, DBConnect.COLUMN_TEXT, DBConnect.COLUMN_URGENT};
+        Cursor cursor = db.query(false, DBConnect.TABLE_TODO, columns, null, null, null, null, null, null);
 
         while (cursor.moveToNext()) {
-                long id = cursor.getLong(cursor.getColumnIndexOrThrow(DBStorage.COLUMN_ID));
-                String text = cursor.getString(cursor.getColumnIndexOrThrow(DBStorage.COLUMN_TEXT));
-                int urgentIndex = cursor.getColumnIndex(DBStorage.COLUMN_URGENT);
+                long id = cursor.getLong(cursor.getColumnIndexOrThrow(DBConnect.COLUMN_ID));
+                String text = cursor.getString(cursor.getColumnIndexOrThrow(DBConnect.COLUMN_TEXT));
+                int urgentIndex = cursor.getColumnIndex(DBConnect.COLUMN_URGENT);
                 int urgent = (urgentIndex != -1) ? cursor.getInt(urgentIndex) : 0;
             TodoItem item = new TodoItem(text, urgent == 1);
             item.setId(id);
@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
     private long addToDatabase(TodoItem item) {
         ContentValues values = new ContentValues();
-        values.put(DBStorage.COLUMN_TEXT, item.getText());
-        values.put(DBStorage.COLUMN_URGENT, item.isUrgent() ? 1 : 0);
-        return db.insert(DBStorage.TABLE_TODO, null, values);
+        values.put(DBConnect.COLUMN_TEXT, item.getText());
+        values.put(DBConnect.COLUMN_URGENT, item.isUrgent() ? 1 : 0);
+        return db.insert(DBConnect.TABLE_TODO, null, values);
     }
 
     private void showTodoItem(int pos) {
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 .create().show();
     }
     private void delete(TodoItem item) {
-        db.delete(DBStorage.TABLE_TODO, DBStorage.COLUMN_ID + "= ?",
+        db.delete(DBConnect.TABLE_TODO, DBConnect.COLUMN_ID + "= ?",
                 new String[] {String.valueOf(item.getId()) });
     }
 
