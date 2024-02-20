@@ -26,39 +26,29 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<TodoItem> todoItems = new ArrayList<>();
     MyListAdapter myAdapter;
-    SQLiteDatabase db;
-
+    TodoDAO todoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         EditText editText = findViewById(R.id.editText);
         Button addButton = findViewById(R.id.addButton);
         ListView listView = findViewById(R.id.theListView);
 
-
-        DBConnect dbOpener = new DBConnect(this);
-        db = dbOpener.getWritableDatabase();
-        Cursor cursor = db.query(DBConnect.TABLE_TODO, null, null, null, null, null, null);
-        printCursor(cursor);
-        cursor.close();
-
-        loadFromDatabase();
-
-
+        todoDAO = new TodoDAO(this);
+        todoDAO.printCursor(todoDAO.getAllItemsCursor());
+        todoItems = todoDAO.getAllItems();
         myAdapter = new MyListAdapter();
         listView.setAdapter(myAdapter);
-
 
         addButton.setOnClickListener(view -> {
             String userInput = editText.getText().toString().trim();
             if (!userInput.isEmpty()) {
                 boolean isUrgent = ((Switch) findViewById(R.id.switchBox)).isChecked();
                 TodoItem item = new TodoItem(userInput, isUrgent);
-                long id = addToDatabase(item);
+                long id = todoDAO.addItem(item);
                 item.setId(id);
                 todoItems.add(item);
                 myAdapter.notifyDataSetChanged();
@@ -70,30 +60,6 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener((parent, view, position, id) -> showTodoItem(position));
     }
 
-    private void loadFromDatabase() {
-        String[] columns = {DBConnect.COLUMN_ID, DBConnect.COLUMN_TEXT, DBConnect.COLUMN_URGENT};
-        Cursor cursor = db.query(false, DBConnect.TABLE_TODO, columns, null, null, null, null, null, null);
-
-        while (cursor.moveToNext()) {
-                long id = cursor.getLong(cursor.getColumnIndexOrThrow(DBConnect.COLUMN_ID));
-                String text = cursor.getString(cursor.getColumnIndexOrThrow(DBConnect.COLUMN_TEXT));
-                int urgentIndex = cursor.getColumnIndex(DBConnect.COLUMN_URGENT);
-                int urgent = (urgentIndex != -1) ? cursor.getInt(urgentIndex) : 0;
-            TodoItem item = new TodoItem(text, urgent == 1);
-            item.setId(id);
-            todoItems.add(item);
-        }
-
-        cursor.close();
-    }
-
-    private long addToDatabase(TodoItem item) {
-        ContentValues values = new ContentValues();
-        values.put(DBConnect.COLUMN_TEXT, item.getText());
-        values.put(DBConnect.COLUMN_URGENT, item.isUrgent() ? 1 : 0);
-        return db.insert(DBConnect.TABLE_TODO, null, values);
-    }
-
     private void showTodoItem(int pos) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(getString(R.string.delete_prompt))
@@ -101,17 +67,13 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(getString(R.string.yes), (click, arg) -> {
                     TodoItem item = todoItems.get(pos);
                     todoItems.remove(pos);
-                    delete(item);
+                    todoDAO.deleteItem(item.getId());
                     myAdapter.notifyDataSetChanged();
                 })
                 .setNegativeButton(getString(R.string.no), (click, arg) -> {
                 })
 
                 .create().show();
-    }
-    private void delete(TodoItem item) {
-        db.delete(DBConnect.TABLE_TODO, DBConnect.COLUMN_ID + "= ?",
-                new String[] {String.valueOf(item.getId()) });
     }
 
     private class MyListAdapter extends BaseAdapter {
@@ -124,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         public long getItemId(int position) {
             return position;
         }
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View newView = getLayoutInflater().inflate(R.layout.row_layout, parent,
+        public android.view.View getView(int position, android.view.View convertView, android.view.ViewGroup parent) {
+            android.view.View newView = getLayoutInflater().inflate(R.layout.row_layout, parent,
                     false);
             TextView textView = newView.findViewById(R.id.textGoesHere);
             TodoItem currentItem = todoItems.get(position);
@@ -140,30 +102,4 @@ public class MainActivity extends AppCompatActivity {
             return newView;
         }
     }
-    private void printCursor(Cursor cursor) {
-        int versionNumber = db.getVersion();
-        Log.d("PrintCursor", "Database version number: " + versionNumber);
-        int columnCount = cursor.getColumnCount();
-        Log.d("PrintCursor", "Number of columns in the cursor: " + columnCount);
-
-        StringBuilder columnNames = new StringBuilder("Column names: ");
-        for (int i = 0; i < columnCount; i++) {
-            columnNames.append(cursor.getColumnName(i)).append(", ");
-        }
-        Log.d("PrintCursor", columnNames.toString());
-
-        cursor.moveToFirst();
-
-        int resultCount = cursor.getCount();
-        Log.d("PrintCursor", "Number of results in the cursor: " + resultCount);
-
-        for (int i = 0; i < resultCount; i++) {
-            StringBuilder rowData = new StringBuilder("Row " + i + ": ");
-            for (int j = 0; j < columnCount; j++) {
-                rowData.append(cursor.getString(j)).append(", ");
-            }
-            Log.d("PrintCursor", rowData.toString());
-            cursor.moveToNext();
-        }
-    }}
-
+}
