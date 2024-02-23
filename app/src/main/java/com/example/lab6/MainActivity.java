@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     String result = sb.toString(); // JSON response
                     // Parse JSON
                     JSONObject jsonObject = new JSONObject(result);
-                    // Get the "id" field from JSON
+                    Log.i("URL", "JSON DATA " + result);
                     String id;
                     if (jsonObject.has("_id")) {
                         id = jsonObject.getString("_id");
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         return null;
                     }
                     // Construct image URL
-                    String imageUrl = "https://cataas.com/cat/says/" + id;
+                    String imageUrl = "https://cataas.com/cat/" + id;
                     File imageFile = new File(getFilesDir(), id + ".jpg");
                     if (imageFile.exists()) {
                         Log.i("URL", "FILE EXISTS " + id);
