@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     // Reset progress bar before loading a new image
-
+                        progressBar.setProgress(0);
                     return bitmap;
                 }}
             } catch (Exception e) {
