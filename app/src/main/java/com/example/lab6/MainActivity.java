@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         catImagesTask = new CatImages();
         catImagesTask.execute("https://cataas.com/cat?json=true");
-    }
+    } //Setting view and calling CatImages method to start parse Json
     private class CatImages extends AsyncTask<String, Integer, Bitmap> {
 
         @Override
         protected Bitmap doInBackground(String... args) {
             try {
-                while (true) {
+                while (true) { //Run forever
                     URL url = new URL(args[0]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     InputStream response = urlConnection.getInputStream();
@@ -51,21 +51,21 @@ public class MainActivity extends AppCompatActivity {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         sb.append(line).append("\n");
-                    }
-                    String result = sb.toString(); // JSON response
-                    // Parse JSON
-                    JSONObject jsonObject = new JSONObject(result);
-                    Log.i("URL", "JSON DATA " + result);
+                    }// store url and read JSON data  until end of json data
+                    String result = sb.toString(); // store json  as string
+
+                    JSONObject jsonObject = new JSONObject(result); // store as JSON object
+                    Log.i("URL", "JSON DATA " + result); //log message for troubleshooting
                     String id;
                     if (jsonObject.has("_id")) {
                         id = jsonObject.getString("_id");
                     } else {
                         Log.e("Error", "JSON response does not contain the key '_id'");
                         return null;
-                    }
+                    } // check for _id tag, used if to handle gracefully
                     // Construct image URL
-                    String imageUrl = "https://cataas.com/cat/" + id;
-                    File imageFile = new File(getFilesDir(), id + ".jpg");
+                    String imageUrl = "https://cataas.com/cat/" + id; // prepare string to be url
+                    File imageFile = new File(getFilesDir(), id + ".jpg"); //store image local
                     if (imageFile.exists()) {
                         Log.i("URL", "FILE EXISTS " + id);
                         // Load the image from the device
@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
                     InputStream input = connection.getInputStream();
                     Log.i("URL", "URL IS: " + imageUrl);
                     Bitmap bitmap = BitmapFactory.decodeStream(input);
+
+                    //if exists let BitmapFactory to use local copy, if not create new url with imageUrl
                     // Update progress bar
                     for (int i = 0; i < 100; i++) {
                         progressBar.setProgress(i);
