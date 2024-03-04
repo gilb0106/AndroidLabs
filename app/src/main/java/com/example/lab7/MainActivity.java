@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +25,7 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
     private static ArrayList<Character> characters;
     private static boolean isTablet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,13 +34,16 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.theListView);
         new FetchCharactersTask(this, listView).execute();
     }
+
     private static class FetchCharactersTask extends AsyncTask<Void, Void, ArrayList<Character>> {
         private Context mContext;
         private ListView mListView;
+
         public FetchCharactersTask(Context context, ListView listView) {
             mContext = context;
             mListView = listView;
         }
+
         @Override
         protected ArrayList<Character> doInBackground(Void... voids) {
             ArrayList<Character> characters = new ArrayList<>();
@@ -70,15 +77,12 @@ public class MainActivity extends AppCompatActivity {
             }
             return characters; // return characters
         }
+
         @Override
         protected void onPostExecute(ArrayList<Character> characters) {
             super.onPostExecute(characters);
             MainActivity.characters = characters;
-            ArrayList<String> characterNames = new ArrayList<>();
-            for (Character character : characters) {
-                characterNames.add(character.getName());
-            }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, characterNames);
+            ListAdapter adapter = new ListAdapter(mContext, characters);
             mListView.setAdapter(adapter);
             mListView.setOnItemClickListener((parent, view, position, id) -> {
                 Character selectedCharacter = MainActivity.characters.get(position);
@@ -91,10 +95,9 @@ public class MainActivity extends AppCompatActivity {
                     DetailsFragment dFragment = new DetailsFragment();
                     dFragment.setArguments(bundle);
                     ((AppCompatActivity) mContext).getSupportFragmentManager()
-                    // had to add funky cast mConteext  to AppCompatActivity to use getSupportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
-                            .commit(); //actually load the fragment.
+                            .replace(R.id.fragmentLocation, dFragment) // Add the fragment in FrameLayout
+                            .commit(); // Actually load the fragment.
                 } else {
                     Intent intent = new Intent(mContext, EmptyActivity.class);
                     intent.putExtras(bundle);
@@ -102,5 +105,4 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-}
+    }}
