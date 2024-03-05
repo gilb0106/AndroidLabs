@@ -34,16 +34,13 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.theListView);
         new FetchCharactersTask(this, listView).execute();
     }
-
     private static class FetchCharactersTask extends AsyncTask<Void, Void, ArrayList<Character>> {
         private Context mContext;
         private ListView mListView;
-
         public FetchCharactersTask(Context context, ListView listView) {
             mContext = context;
             mListView = listView;
         }
-
         @Override
         protected ArrayList<Character> doInBackground(Void... voids) {
             ArrayList<Character> characters = new ArrayList<>();
@@ -77,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return characters; // return characters
         }
-
         @Override
         protected void onPostExecute(ArrayList<Character> characters) {
             super.onPostExecute(characters);
@@ -90,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("name", selectedCharacter.getName());
                 bundle.putString("height", selectedCharacter.getHeight());
                 bundle.putString("mass", selectedCharacter.getMass());
-
                 if (isTablet) {
                     DetailsFragment dFragment = new DetailsFragment();
                     dFragment.setArguments(bundle);

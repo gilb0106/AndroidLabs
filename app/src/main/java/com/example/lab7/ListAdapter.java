@@ -13,12 +13,10 @@ import java.util.ArrayList;
 public class ListAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Character> mCharacters;
-
     public ListAdapter(Context context, ArrayList<Character> characters) {
         mContext = context;
         mCharacters = characters;
     }
-
     @Override
     public int getCount() {
         return mCharacters.size();
@@ -35,14 +33,14 @@ public class ListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
+    public View getView(int position, View view, ViewGroup parent) {
+        if (view == null) { // if view not available for reuse, use simplelist default layout
             LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            convertView = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-        }
+            view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+        } // if view does exist, recycle and  load characters
         Character character = mCharacters.get(position);
-        TextView textView = convertView.findViewById(android.R.id.text1);
+        TextView textView = view.findViewById(android.R.id.text1);
         textView.setText(character.getName());
-        return convertView;
+        return view;
     }
 }

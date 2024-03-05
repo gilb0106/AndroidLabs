@@ -12,14 +12,11 @@ import androidx.fragment.app.Fragment;
 
 public class DetailsFragment extends Fragment {
     boolean isTablet;
-    private long id;
     private Character character; // made character class for nice easy storage and variable passing
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.fragment_details, container, false);
         Bundle bundle = getArguments();
-
         if (bundle != null) {
             character = new Character(
                     bundle.getString("name"),
