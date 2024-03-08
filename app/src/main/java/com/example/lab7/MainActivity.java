@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         protected ArrayList<Character> doInBackground(Void... voids) {
             ArrayList<Character> characters = new ArrayList<>();
             try {
-                URL url = new URL("https://swapi.dev/api/people/?format=json");
+               // URL url = new URL("https://swapi.dev/api/people/?format=json");
+                URL url = new URL("https://swapi-node.vercel.app/api/people");
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 try {
                     InputStream in = urlConnection.getInputStream();
@@ -57,9 +58,15 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray resultsArray = jsonObject.getJSONArray("results");
                         for (int i = 0; i < resultsArray.length(); i++) {
                             JSONObject characterObject = resultsArray.getJSONObject(i);
-                            String name = characterObject.getString("name");
+                    /*      String name = characterObject.getString("name");
                             String height = characterObject.getString("height");
-                            String mass = characterObject.getString("mass");
+                            String mass = characterObject.getString("mass"); */
+                            String name = characterObject.getJSONObject("fields")
+                                    .getString("name");
+                            String height = characterObject.getJSONObject("fields")
+                                    .getString("height");
+                            String mass = characterObject.getJSONObject("fields")
+                                    .getString("mass");
                             Character character = new Character(name, height, mass);
                             characters.add(character);
                         }
