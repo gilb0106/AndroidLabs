@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/Home"
+        android:title="Home"
+        android:icon="@drawable/enter"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/DadJoke"
+        android:icon="@drawable/warn"
+        android:title="Dad Joke"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/Exit"
+        android:icon="@drawable/exit"
+        android:title="Exit"
+        app:showAsAction="never"/>
+
+
+</menu>
