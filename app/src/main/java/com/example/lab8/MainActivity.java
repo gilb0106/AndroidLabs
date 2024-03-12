@@ -22,17 +22,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // For toolbar:
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         // For NavigationDrawer:
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -46,11 +43,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String message = null;
         int id = item.getItemId();
         if (id == R.id.Choice1) {
-            // Handle Exit2 menu item click
-            Toast.makeText(this, "Choice1 clicked", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You clicked on Choice 1", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.Choice2) {
-            // Handle Exit23 menu item click
-            Toast.makeText(this, "Choice2 clicked", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You clicked on Choice 2", Toast.LENGTH_SHORT).show();
         }
         return true;
     }
@@ -58,25 +53,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.DadJoke) {
-            // Inflate dad_joke.xml layout
+
             LayoutInflater inflater = LayoutInflater.from(this);
             View dadJokeView = inflater.inflate(R.layout.dad_joke, null);
-
-            // Find the TextView containing the dad joke text
             TextView textViewDadJoke = dadJokeView.findViewById(R.id.textViewDadJoke);
-
-            // Get the dad joke text from the TextView
             String dadJokeText = textViewDadJoke.getText().toString();
-
-            // Set the dad joke text to the TextView in the main activity's layout
             TextView textViewDadJokeInMainActivity = findViewById(R.id.textViewDadJoke);
             textViewDadJokeInMainActivity.setText(dadJokeText);
         } else if (id == R.id.Home) {
-            // Clear the dad joke text in the main activity's layout
             TextView textViewDadJokeInMainActivity = findViewById(R.id.textViewDadJoke);
             textViewDadJokeInMainActivity.setText("");
         } else if (id == R.id.Exit) {
-            // Close the app
             finish();
         }
 
