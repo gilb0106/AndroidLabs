@@ -3,12 +3,12 @@
     <item
         android:id="@+id/Choice1"
         android:icon="@drawable/bottle"
-        android:title="Exit"
+        android:title="choice1"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/Choice2"
         android:icon="@drawable/concrete"
-        android:title="Exit"
+        android:title="choice2"
         app:showAsAction="always"/>
 </menu>
